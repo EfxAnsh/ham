@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorry Miss Hamster</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff0f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 90%;
+    }
+
+    .box {
+      background-color: #ffe6f0;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 0 20px rgba(255, 192, 203, 0.6);
+      display: none;
+      position: relative;
+    }
+
+    button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 15px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ff1493;
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
+      background-size: cover;
+      animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .step5-box {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.95);
+      z-index: 1;
+      overflow: hidden;
+
+
+    }
+
+    .step5-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.pinimg.com/originals/c2/2c/55/c22c5538f66ffcf7d4f6823b013a0455.jpg'),
+                  url('https://i.pinimg.com/originals/2b/54/f6/2b54f61e021870a174354a96e8d89c61.jpg'),
+                  url('https://i.pinimg.com/originals/f5/fb/3b/f5fb3b47859ef34432858f99e156775d.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: blur(3px) brightness(0.9);
+      opacity: 0.25;
+      z-index: 0;
+    }
+    .step5-box > * {
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgmusic" src="audio.mp3"></audio>
+  <div class="container">
+    <div class="box" id="step1">
+      <p>Hlo... you’re probably thinking what the fuck this idiot sent me 
+        I know you’re mad at me, and honestly… that’s fair.<br>
+        That’s why I thought this would be the best way to reach you — because now, you can’t yell at me 😮‍💨😮‍💨<br>
+        And I clearly can’t send a letter(i know u loVe them)<br>
+       But By the time it reaches you, I’d probably be dead .<br>
+        So take this as my letter — my digital version </p>
+      </p>
+      <button onclick="nextStep(2)">Next</button>
+    </div>
+
+    <div class="box" id="step2">
+      <p>Click this... and you should probably wear earphones 🎧 (as Background music is important)</p>
+      <button onclick="playAudio()">Click Here</button>
+    </div>
+
+    <div class="box" id="step3">
+      <p>Press to open 💌</p>
+      <button onclick="openLetter()">Open</button>
+    </div>
+
+    <div class="box" id="step4">
+      <p>I’m really really sorry... Would you forgive me?</p>
+      <button onclick="finalStep(true)">Yes 😢</button>
+      <button onclick="sorryLoop()">No 🙁</button>
+    </div>
+
+    <div class="box step5-box" id="step5">
+        <h1>Dear Miss Hamster 🐹💗</h1>
+        <p>I’m really really sorry... I never wanted to hurt you.<br>
+        You're genuinely one of the most special people to me.<br>
+        I regret everything that made you sad, even slightly.<br>
+        You deserve happiness, peace, and to feel loved every moment.<br>
+        I want to be better, for you, for us.<br>
+        I miss your smile, your voice, your everything.<br>
+        And I hope we can go back to laughing about nonsense again soon 😔💖<br>
+        Please allow me one tight hug... to fix everything ♥️♥️♥️💌</p>
+    </div>
+  </div>
+  <div style="margin-bottom: 10px;">
+    <img src="photo1.jpeg"  style="max-width: 20%; border-radius: 15px; margin: 5px 0;">
+    <img src="photo2.jpeg"  style="max-width: 20%; border-radius: 15px; margin: 5px 0;">
+    <img src="photo3.jpeg"  style="max-width: 20%; border-radius: 15px; margin: 5px 0;">
+  </div>
+</div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    let currentStep = 1;
+
+    document.getElementById("step1").style.display = "block";
+
+    function nextStep(step) {
+      document.getElementById("step" + currentStep).style.display = "none";
+      document.getElementById("step" + step).style.display = "block";
+      currentStep = step;
+    }
+
+    function playAudio() {
+      document.getElementById("bgmusic").play();
+      nextStep(3);
+    }
+
+    function openLetter() {
+      nextStep(4);
+    }
+
+    function finalStep(yes) {
+      if (yes) {
+        nextStep(5);
+      } else {
+        alert("I am genuinely sorry mam 🙏");
+      }
+    }
+
+    function sorryLoop() {
+      alert("I am genuinely sorry mam 🙏");
+    }
+
+    // heart rain
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 300);
+  </script>
+</body>
+</html>
